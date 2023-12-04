@@ -1,1 +1,20 @@
-{"name": "1", "status": "passed", "start": 1701649516990, "stop": 1701649517000, "uuid": "3dc7e422-09c5-4abb-865c-a9d910314fd7", "historyId": "feb5ff5f301fa7154ea1f937ca1476bf", "testCaseId": "feb5ff5f301fa7154ea1f937ca1476bf", "fullName": "flask_server.assets.test_files.a#1", "labels": [{"name": "tag", "value": "inline"}, {"name": "parentSuite", "value": "flask_server.assets.test_files"}, {"name": "suite", "value": "a"}, {"name": "host", "value": "0XUD63D9Y0PD5"}, {"name": "thread", "value": "6997-MainThread"}, {"name": "framework", "value": "pytest"}, {"name": "language", "value": "cpython3"}, {"name": "package", "value": "flask_server.assets.test_files.a"}]}
+{
+  "name": "1",
+  "status": "passed",
+  "start": 1701649516990,
+  "stop": 1701649517000,
+  "uuid": "3dc7e422-09c5-4abb-865c-a9d910314fd7",
+  "historyId": "feb5ff5f301fa7154ea1f937ca1476bf",
+  "testCaseId": "feb5ff5f301fa7154ea1f937ca1476bf",
+  "fullName": "flask_server.assets.test_files.a#1",
+  "labels": [
+    { "name": "tag", "value": "inline" },
+    { "name": "parentSuite", "value": "flask_server.assets.test_files" },
+    { "name": "suite", "value": "a" },
+    { "name": "host", "value": "0XUD63D9Y0PD5" },
+    { "name": "thread", "value": "6997-MainThread" },
+    { "name": "framework", "value": "pytest" },
+    { "name": "language", "value": "cpython3" },
+    { "name": "package", "value": "flask_server.assets.test_files.a" }
+  ]
+}

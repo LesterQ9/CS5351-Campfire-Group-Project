@@ -45,9 +45,15 @@ def upload_file():
 # Report API route
 @app.route("/report", methods=['GET'])
 def report():
-    filepath = "assets/test_files/a.py"
+    filepath = "assets/test_files/c.py"
     contents = read_file_line_by_line(filepath)
-    return {"file": contents}
+    file = {
+            "filename": 'c.py',
+            "contents": contents
+        }
+    result = []
+    result.append(file)
+    return result
 
 @app.route("/result", methods=['GET'])
 def pytest_report():

@@ -1,29 +1,29 @@
 import json
-import glob
+import os
 
 def parse_results():
-    # Define the pattern for matching files
-    file_pattern = '../assets/results/*-result.json'  # Adjust the pattern according to your file names
+    # Define the pattern for matching files in the 'results' directory
+    file_pattern = '-result.json'
 
-    # Use glob to get a list of file names matching the pattern
-    file_list = glob.glob(file_pattern)
+    file_path = 'assets/results'
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    base_dir = os.path.dirname(base_dir)
+
+    file_path = os.path.join(base_dir, file_path)
+    
+    file_list = [f for f in os.listdir(file_path) if f.endswith(file_pattern)]
 
     results = []
 
     # Loop through each file and read its content
     for file_name in file_list:
-        with open(file_name, 'r') as file:
+        temp_file_path = os.path.join(file_path, file_name);
+        with open(temp_file_path, 'r') as file:
             json_data = file.read()
 
         # Parse JSON
         data = json.loads(json_data)
-
-        # Access and process the data as needed
-        print(f"Processing {file_name}:")
-        print("Name:", data.get("name", "N/A"))
-        print("Status:", data.get("status", "N/A"))
-        # ... and so on
-        print("\n")
 
         labels = []
 
@@ -49,5 +49,3 @@ def parse_results():
         results.append(result)
     
     return results
-
-parse_results()
