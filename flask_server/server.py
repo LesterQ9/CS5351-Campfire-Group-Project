@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from utilization.file_read import read_file_line_by_line
-from utilization.file_parse import parse_results
+from utilization.file_parse import parse_allure_results, parse_html_report
 import os
 
 app = Flask(__name__)
@@ -45,19 +45,11 @@ def upload_file():
 # Report API route
 @app.route("/report", methods=['GET'])
 def report():
-    filepath = "assets/test_files/c.py"
-    contents = read_file_line_by_line(filepath)
-    file = {
-            "filename": 'c.py',
-            "contents": contents
-        }
-    result = []
-    result.append(file)
-    return result
+    return parse_html_report()
 
 @app.route("/result", methods=['GET'])
 def pytest_report():
-    return parse_results()
+    return parse_allure_results()
 
 # Route to handle the "run code" message
 @app.route("/run-code", methods=['POST'])

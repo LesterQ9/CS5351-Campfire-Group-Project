@@ -1,5 +1,5 @@
 import React from "react";
-import '../style/general.css'
+import '../styles/general.css'
 
 const styles = {
     heading: {
@@ -14,7 +14,7 @@ function Overview({ data, pytestbutton, removebutton }) {
     return (
         <div className="overview-container">
             <h2 style={styles.heading}>Pytest Overview</h2>
-            {!data ? (
+            {!data || typeof data === 'undefined' || data.length === 0 ? (
                 <p>No file uploaded</p>
             ) : (
                 <>

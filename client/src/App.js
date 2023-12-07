@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Upload from './pages/Upload';
 import Home from './pages/Home';
 import Overview from './pages/Overview';
-import Results from './pages/Result';
-import './style/general.css'
+import './styles/general.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [uploadedFile, setUploadedFile] = useState(null);
   const [fileData, setFileData] = useState([]);
   // eslint-disable-next-line no-unused-vars 
-  const [result, setResult] = useState([]);
+  // const [result, setResult] = useState(null);
 
   const handleFileUpload = (file) => {
     setUploadedFile(file);
@@ -25,7 +24,7 @@ function App() {
   };
 
   const handleRemoveClick = () => {
-    // Add logic for Remove button click
+    setFileData([])
   };
 
   const handleUpload = async () => {
@@ -51,24 +50,24 @@ function App() {
   };
 
 
-  const fetchResult = () => {
-    fetch("/result")
-      .then(res => res.json())
-      .then(data => {
-        setResult(data)
-        console.log(data);
-      })
-      .catch(error => {
-        console.error("Error fetching data:", error);
-        // Handle errors as needed
-      });
-  };
+  // const fetchResult = () => {
+  //   fetch("/result")
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setResult(data)
+  //       console.log(data);
+  //     })
+  //     .catch(error => {
+  //       console.error("Error fetching data:", error);
+  //       // Handle errors as needed
+  //     });
+  // };
 
   // const fetchReport = () => {
   //   fetch("/report")
   //     .then(res => res.json())
   //     .then(data => {
-  //       setFileData(data)
+  //       setResult(data)
   //       console.log("File Data: ", data);
   //     })
   //     .catch(error => {
@@ -80,28 +79,32 @@ function App() {
 
   useEffect(() => {
     // Call fetchReport when the component mounts
-    fetchResult();
+    // fetchResult();
     // fetchReport();
   }, []);
 
   return (
-    <div className="container">
-      <nav>
-        <ul className="navigation">
-          <li onClick={() => handleNavigation('home')}>Home</li>
-          <li onClick={() => handleNavigation('upload')}>Upload</li>
-          <li onClick={() => handleNavigation('overview')}>Overview</li>
-          <li onClick={() => handleNavigation('result')}>Result</li>
-        </ul>
-      </nav>
+    <>
+      <div className="container">
+        <nav>
+          <ul className="navigation">
+            <li onClick={() => handleNavigation('home')}>Home</li >
+            <li onClick={() => handleNavigation('upload')}>Upload</li>
+            <li onClick={() => handleNavigation('overview')}>Overview</li>
+            <li><a href="./report.html" target="_blank" rel="noopener noreferrer">
+              Report
+            </a></li>
+          </ul >
+        </nav >
 
-      <div className="content">
-        {currentPage === 'home' && <Home />}
-        {currentPage === 'upload' && <Upload handleFileUpload={handleFileUpload} handleUpload={handleUpload} />}
-        {currentPage === 'overview' && <Overview data={fileData} pytestbutton={handlePytestClick} removebutton={handleRemoveClick} />}
-        {currentPage === 'result' && <Results testResults={result} />}
-      </div>
-    </div>
+        <div className="content">
+          {currentPage === 'home' && <Home />}
+          {currentPage === 'upload' && <Upload handleFileUpload={handleFileUpload} handleUpload={handleUpload} />}
+          {currentPage === 'overview' && <Overview data={fileData} pytestbutton={handlePytestClick} removebutton={handleRemoveClick} />}
+          {/* {currentPage === 'result' && <Report data={result} />} */}
+        </div>
+      </div >
+    </>
   )
 }
 

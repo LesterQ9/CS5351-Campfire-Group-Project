@@ -14,7 +14,7 @@ body {
     overflow-x: hidden;
 }
 
-.sidenav a {
+.sidenav li {
     padding: 12px 10px 8px 12px;
     text-decoration: none;
     font-size: 18px;
@@ -72,7 +72,7 @@ tr {
     vertical-align: middle;
 }
 
-.loader {
+/* .loader {
     position: fixed;
     left: 0px;
     top: 0px;
@@ -80,7 +80,7 @@ tr {
     height: 100%;
     z-index: 9999;
     background: url('https://i.imgur.com/n3Tcoxz.gif') 50% 50% no-repeat rgb(249, 249, 249);
-}
+} */
 
 .card-wrapper {
     background-color: #f5f5f5;
