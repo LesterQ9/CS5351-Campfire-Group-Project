@@ -1,12 +1,13 @@
 from flask import Flask, request, jsonify
 from utilization.file_read import read_file_line_by_line
 from utilization.file_parse import parse_allure_results, parse_html_report
+from utilization.cmd_run import pytestHTML, removeFile
 import os
 
 app = Flask(__name__)
 
 UPLOAD_FOLDER = 'assets/uploads'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'py'}
+ALLOWED_EXTENSIONS = {'py'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -46,6 +47,30 @@ def upload_file():
 @app.route("/report", methods=['GET'])
 def report():
     return parse_html_report()
+
+@app.route("/api/report", methods=['POST'])
+def generateReport():
+    pytestHTML()
+    return {"message": "Report generated"}
+
+@app.route("/api/delete", methods=['DELETE'])
+
+
+def deleteFile():
+    try:
+        data = request.get_json()
+        filename = data.get("filename")
+
+        # Check if the file is selected
+        if not filename:
+            return jsonify({"error": "No file selected"}), 400
+
+        # Check if the file has an allowed file extension
+        if allowed_file(filename):
+            removeFile(filename)
+            return jsonify({"message": "File removed successfully"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/result", methods=['GET'])
 def pytest_report():

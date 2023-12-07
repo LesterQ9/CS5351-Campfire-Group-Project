@@ -18,20 +18,25 @@ function Overview({ data, pytestbutton, removebutton }) {
                 <p>No file uploaded</p>
             ) : (
                 <>
-                    <>
-                        <h2>{data.filename}</h2>
-                        {data.contents.map((line, index) => (
-                            <p key={index}>{line}</p>
-                        ))}
-                        <div className="button-container">
-                            <button onClick={pytestbutton} className="action-button">
-                                Pytest
-                            </button>
-                            <button onClick={removebutton} className="action-button">
-                                Remove
-                            </button>
+                    {data.map((item, itemIndex) => (
+                        <div key={itemIndex}>
+                            <h2>{item.filename}</h2>
+                            {item.contents.map((line, index) => (
+                                <p key={index}>{line}</p>
+                            ))}
+                            < div className="button-container" >
+                                <button onClick={() => removebutton(item.filename, itemIndex)} className="action-button">
+                                    Remove
+                                </button>
+                            </div>
                         </div>
-                    </>
+                    ))}
+                    < div className="button-container" >
+                        <button onClick={() => pytestbutton()} className="action-button">
+                            Pytest
+                        </button>
+                    </div>
+
                 </>
             )}
         </div>

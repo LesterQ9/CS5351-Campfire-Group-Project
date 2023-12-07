@@ -11,6 +11,10 @@ function App() {
   // eslint-disable-next-line no-unused-vars 
   // const [result, setResult] = useState(null);
 
+  const addFile = (file) => {
+    setFileData(fileData => [...fileData, file])
+  }
+
   const handleFileUpload = (file) => {
     setUploadedFile(file);
   };
@@ -19,12 +23,50 @@ function App() {
     setCurrentPage(page);
   };
 
-  const handlePytestClick = () => {
-    // Add logic for Pytest button click
+  const checkForDuplicate = (data) => {
+    // Assuming fileData is a state variable
+    const isDuplicate = fileData.some((item) => item.filename === data.filename);
+
+    return isDuplicate;
   };
 
-  const handleRemoveClick = () => {
-    setFileData([])
+  const handlePytestClick = async () => {
+    try {
+      const response = await fetch('api/report', {
+        method: 'POST',
+      })
+      const data = await response.json();
+      window.location.href = './report.html'
+      console.log('Pytest run successfully', data)
+    } catch (error) {
+      console.error('Pytest run failed', error)
+    }
+  };
+
+  const handleRemoveClick = async (filename, fileIndex) => {
+    try {
+      const response = await fetch('api/delete', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ filename }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to remove file');
+      }
+
+      const temp = [...fileData];
+      temp.splice(fileIndex, 1);
+      setFileData(temp);
+
+      const data = await response.json();
+      console.log('File Removed successfully:', data);
+    } catch (error) {
+      console.error('Remove file failed', error);
+    }
   };
 
   const handleUpload = async () => {
@@ -41,46 +83,19 @@ function App() {
 
         const data = await response.json();
         console.log('File uploaded successfully:', data);
-        setFileData(data);
-        console.log('File Data:', fileData);
+        if (!checkForDuplicate(data)) {
+          addFile(data);
+          console.log('File Data:', fileData);
+          handleNavigation('overview');
+        }
       } catch (error) {
         console.error('Error uploading file:', error);
       }
     }
   };
 
-
-  // const fetchResult = () => {
-  //   fetch("/result")
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setResult(data)
-  //       console.log(data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching data:", error);
-  //       // Handle errors as needed
-  //     });
-  // };
-
-  // const fetchReport = () => {
-  //   fetch("/report")
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setResult(data)
-  //       console.log("File Data: ", data);
-  //     })
-  //     .catch(error => {
-  //       console.error("Error fetching data:", error);
-  //       // Handle errors as needed
-  //     });
-  // }
-
-
   useEffect(() => {
-    // Call fetchReport when the component mounts
-    // fetchResult();
-    // fetchReport();
+
   }, []);
 
   return (
